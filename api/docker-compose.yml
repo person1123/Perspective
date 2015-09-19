@@ -1,12 +1,12 @@
 postgres_data:
-  image: formulagrid/postgresql
+  image: postgres
   volumes:
     - /var/lib/postgresql
   entrypoint: /bin/true
   container_name: hackdata
   
 postgres_server:
-  image: formulagrid/postgresql
+  image: postgres
   environment:
     - POSTGRES_DB=hackmit
   volumes_from:

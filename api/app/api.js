@@ -2,53 +2,44 @@
   'use strict';
 
   // Dependencies
+  let cors = require('cors');
   let app = require('express')();
-
-  // ***Docker Database and ORM creation for later***
-  // let Sequelize = require('sequelize');
-  // let pg_ip = process.env.HACKDB_PORT_5432_TCP_ADDR;
-  // let orm = new Sequelize('postgres://' + pg_ip + ':5432/hackmit');
+  let DBModel = require('./model.js');
 
   // Create the server
+  app.use(cors());
   require('http').createServer(app).listen('3000');
   
   app.get('/topics', (req, res) => {
-    let response = {
-      topics: [
-        {
-          id: 1,
-          name: 'Presidential Race'
-        },
-        {
-          id: 2,
-          name: 'Clocks are Bombs'
-        },
-        {
-          id: 3,
-          name: 'Cat Food is Great'
-        },
-        {
-          id: 4,
-          name: 'Republicans are Vampires'
-        },
-        {
-          id: 5,
-          name: 'Cows Go Moo'
-        },
-        {
-          id: 6,
-          name: 'Haskell is a language'
-        }
-      ],
-      articles: [
-        {
-          id: 1,
-          name: 'Jesus is Real',
-          summary: 'He is really I swore on me mum',
-          topic: 1
-        }
-      ]
-    };
-    res.json(response);
+    let response = {};
+    
+    Promise.all([
+      DBModel.Topic.findAll().then((topics) => {
+        response.topics = topics;
+      }),
+      DBModel.Article.findAll().then((articles) => {
+        response.articles = articles;
+      })
+    ]).then(() => {
+      res.json(response);
+    });
+  });
+
+  app.get('/topics/:topic_id', (req, res) => {
+    let response = {};
+    let id = req.params.topic_id;
+    
+    Promise.all([
+      DBModel.Topic.findById(id).then((topics) => {
+        response.topic = topics;
+      }),
+      DBModel.Article.findAll({
+        where: {topicId: id}
+      }).then((articles) => {
+        response.articles = articles;
+      })
+    ]).then(() => {
+      res.json(response);
+    });
   });
 })();
