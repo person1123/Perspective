@@ -1,0 +1,8 @@
+import urllib2, json
+
+
+def scrapeReddit(name):
+    response = urllib2.urlopen('http://www.reddit.com/search.json?q=' + hello)
+    json = response.read()
+
+    return json.loads(html)

@@ -1,0 +1,4 @@
+Theano==0.7.0
+pattern==2.6
+gensim==0.12.2
+newspaper
