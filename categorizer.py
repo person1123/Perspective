@@ -38,10 +38,13 @@ def categorize_articles(articles):
 
     # similar to last step, but with latent semantic indexing model added on top
     # of the tf-ldfi model
-    lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=NUM_TOPICS)
+    lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=3)
     corpus_lsi = lsi[corpus]
     
     categories = lsi.show_topics(formatted=False)
-    category_ratings = [max(rating) for rating in corpus_lsi]
-
+    category_ratings = [max(rating, key=lambda r:abs(r[1])) for rating in corpus_lsi]
+    
+    for doc in corpus_lsi:
+        print(doc)
+        
     return (categories, category_ratings)
