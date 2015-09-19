@@ -1,3 +1,0 @@
-################################################################################
-# This python script will use the gensim module to determine the
-# similarities between articles given a set of articles. 
