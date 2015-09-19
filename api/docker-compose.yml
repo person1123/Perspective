@@ -1,0 +1,24 @@
+postgres_data:
+  image: formulagrid/postgresql
+  volumes:
+    - /var/lib/postgresql
+  entrypoint: /bin/true
+  container_name: hackdata
+  
+postgres_server:
+  image: formulagrid/postgresql
+  environment:
+    - POSTGRES_DB=hackmit
+  volumes_from:
+    - postgres_data
+  container_name: hackdb
+
+node:
+  image: grid/node
+  links:
+    - postgres_server
+  volumes:
+    - /Users/Developer/workspace/hackmit/testing/app:/usr/local/nodejs
+  command: start api.js
+  ports:
+    - "3000:3000"

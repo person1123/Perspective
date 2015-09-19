@@ -1,0 +1,187 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans' sans-serif;
+  margin: 0;
+}
+
+a,
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+svg {
+  display: block;
+}
+
+p,
+span,
+label,
+input {
+  color: $text-color;
+}
+
+h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 300;
+  text-align: center;
+}
+
+hr {
+  background: linear-gradient(to left, transparent, $gray 30%, $gray 70%, transparent);
+  border: 0;
+  height: 1px;
+  margin: 20px 0;
+  
+  &.white {
+    background: linear-gradient(to left, transparent, $white 30%, $white 70%, transparent);
+  }
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+
+.button {
+  @extend %block-center;
+  
+  background-color: $dark-blue;
+  border: 0;
+  border-bottom: 3px solid lighten($dark-blue, 15%);
+  border-radius: 4px;
+  color: $white;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 12px;
+  text-align: center;
+  transition: all .15s;
+  transition-property: background-color, border-color;
+  
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &.primary {
+    @include button-generator($blue);
+  }
+  
+  &.success {
+    @include button-generator($green);
+  }
+  
+  &.danger {
+    @include button-generator($red);
+  }
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+
+  .button {
+    margin: 0;
+    
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
+}
+
+.clearfix {
+  &::before {
+    content: ' ';
+    display: table;
+  }
+  
+  &::after {
+    clear: both;
+    content: ' ';
+    display: table;
+  }
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  
+  &::before {
+    content: ' ';
+    display: table;
+  }
+  
+  &::after {
+    clear: both;
+    content: ' ';
+    display: table;
+  }
+  
+  @media (min-width: $small-screen) {
+    width: $container-small;
+  }
+  
+  @media (min-width: $medium-screen) {
+    width: $container-medium;
+  }
+  
+  @media (min-width: $large-screen) {
+    width: $container-large;
+  }
+}
+
+
+// Make input textfields just an underline
+input[type=text] {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+  font-size: .875rem;
+  height: 2.3125rem;
+  margin: 0 0 1rem;
+  padding: .5rem;
+  transition: border-color .3s linear;
+  width: 100%;
+
+  &:focus,
+  &:active {
+    border-color: $blue;
+    outline: 0;
+  }
+}
+
+.error-message {
+  color: $red;
+  font-family: 'Lato' 'sans-serif';
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.success-message {
+  color: $green;
+  font-family: 'Lato' 'sans-serif';
+  text-align: center;
+}

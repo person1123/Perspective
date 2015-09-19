@@ -1,0 +1,24 @@
+@import 'variables';
+@import 'helpers';
+@import 'defaults';
+@import 'pods';
+
+body > .ember-view {
+  height: 100%;
+}
+
+nav {
+  background-color: $dark-blue;
+  height: 100px;
+}
+
+.page-title {
+  color: $white;
+  letter-spacing: .2em;
+  line-height: 100px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+
+

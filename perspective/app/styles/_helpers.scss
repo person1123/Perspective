@@ -1,0 +1,30 @@
+@mixin button-generator($color) {
+  background-color: $color;
+  border-bottom: 2.5px solid lighten($color, 15%);
+
+  &:hover {
+    background-color: darken($color, 5%);
+    border-bottom: 2.5px solid $color;
+  }
+}
+
+%block-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+%table-center {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+%absolute-center {
+  bottom: 0;  
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

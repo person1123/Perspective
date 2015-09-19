@@ -1,0 +1,11 @@
+<section class="article-grid container row">
+    {{#each model as |topic|}}
+        <div class="topic-div col-md-4 col-xs-12">
+            <section class="box topic">
+                <h2>
+                    {{link-to topic.name 'topic.show' topic}}
+                </h2>
+            </section>
+        </div>
+    {{/each}}
+</section>
