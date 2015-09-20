@@ -21,8 +21,11 @@
 
 .topic {
   background-color: $light-gray;
-  border-bottom: 5px solid $lighter-brown;
-  border-right: 5px solid $light-brown;
+  border-bottom: 5px solid $medium-brown;
+  border-right: 5px solid $medium-dark-brown;
+  border-top: 1px solid $medium-dark-brown;
+  border-left: 1px solid $medium-dark-brown;
+  
   height: 100%;
   padding: 5%;
 

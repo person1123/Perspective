@@ -3,6 +3,13 @@
 @import 'defaults';
 @import 'pods';
 
+body {
+	background-image: url(assets/geek-glasses-200380.jpg);
+	background-scale: contain;
+	background-repeat: none;
+	background-center: 50% 50%;
+}
+
 body > .ember-view {
   height: 100%;
 }
