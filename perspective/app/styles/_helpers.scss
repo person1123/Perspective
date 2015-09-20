@@ -14,10 +14,10 @@
   margin-right: auto;
 }
 
-%table-center {
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
+%flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 %absolute-center {

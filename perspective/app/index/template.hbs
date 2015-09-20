@@ -1,11 +1,9 @@
 <section class="container row">
     {{#each model as |topic|}}
         <div class="topic-div col-md-4 col-xs-12">
-            <div class="box topic">
-                <h2>
-                    {{link-to topic.name 'topic.show' topic}}
-                </h2>
-            </div>
+            {{#link-to "topic.show" topic class="topic"}}
+                {{topic.name}}
+            {{/link-to}}
         </div>
     {{/each}}
 </section>

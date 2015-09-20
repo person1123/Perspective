@@ -11,8 +11,8 @@
     "ember-resolver": "~0.1.18",
     "jquery": "^1.11.3",
     "loader.js": "ember-cli/loader.js#3.2.1",
-    "picnic": "~4.1.1",
     "prefixfree": "*",
-    "qunit": "~1.18.0"
+    "qunit": "~1.18.0",
+    "Snap.svg": "~0.4.1"
   }
 }

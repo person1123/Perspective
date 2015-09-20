@@ -3,6 +3,7 @@
 }
 
 .topic {
+  @extend %flex-center;
   background-color: $red;
   height: 200px;
 }

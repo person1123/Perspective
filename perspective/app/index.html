@@ -16,12 +16,33 @@
         {{content-for 'head-footer'}}
     </head>
     <body>
-        <nav class="top-nav">
-            <h1 class="page-title">Perspective</h1>
-        </nav>
-        <main>
-            {{content-for 'body'}}
-        </main>
+        <section class="page-wrap">
+            <nav class="top-nav">
+                <h1 class="page-title">Perspective</h1>
+            </nav>
+            <main id="ember-content">
+                {{content-for 'body'}}
+            </main>
+        </section>
+        <footer>
+            <section class="row middle-xs center-xs sponsers">
+                <div class="col-xs">
+                    <img class="footer-image" src="http://i.imgur.com/8OBTz3z.png" />
+                </div>
+                <div class="col-xs">
+                    <img class="footer-image" src="http://i.imgur.com/N6RMAHo.png" />
+                </div>
+                <div class="col-xs">
+                    <img class="footer-image" src="assets/hack.svg" />
+                </div>
+                <div class="col-xs">
+                    <img class="footer-image" src="http://i.imgur.com/pZkr9IB.png" />
+                </div>
+                <div class="col-xs">
+                    <img class="footer-image" src="http://i.imgur.com/PwQ3Gze.png" />
+                </div>
+            </section>
+        </footer>
 
         <script src="assets/vendor.js"></script>
         <script src="assets/perspective.js"></script>

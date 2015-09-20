@@ -7,6 +7,16 @@ body > .ember-view {
   height: 100%;
 }
 
+.page-wrap {
+  margin: 0 auto -$footer-height;
+  min-height: 100%;
+
+  &::after {
+    content: '';
+    height: $footer-height;
+  }
+}
+
 nav {
   background-color: $dark-blue;
   height: 100px;
@@ -21,5 +31,16 @@ nav {
   text-transform: uppercase;
 }
 
+footer {
+  background-color: $light-gray2;
+  height: $footer-height;
 
+  .sponsers {
+    height: 100%;
+  }
+  
+  .footer-image {
+    width: 100px;
+  }
+}
 

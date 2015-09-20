@@ -1,0 +1,15 @@
+.topic-div {
+  margin-bottom: 10px;
+}
+
+.hex-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article {
+  @extend %flex-center;
+  background-color: $green;
+  flex-direction: column;
+  height: 200px;
+}
