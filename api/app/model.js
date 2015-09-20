@@ -49,7 +49,7 @@ let Article = sequelize.define('article', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  summary: {
+  link: {
     type: Sequelize.TEXT,
     allowNull: false
   }
