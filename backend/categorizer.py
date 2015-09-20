@@ -12,12 +12,14 @@ from collections import defaultdict
 import numpy
 import operator
 from pprint import pprint
+from sys import argv
+import json
 
 NUM_TOPICS = 30
 
 def train_topics(articles,name='political_bias'):
     stoplist = set('for a of the and to in by'.split())
-    texts = [[word for word in article.lower().split() if word not in stoplist]
+    texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
     # remove words that appear only once
@@ -44,7 +46,7 @@ def sum_article_topics(articles,model_id):
     
     # ignore prepositional type words as meaningful words
     stoplist = set('for a of the and to in by'.split())
-    texts = [[word for word in article.lower().split() if word not in stoplist]
+    texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
     # remove words that appear only once
@@ -75,7 +77,7 @@ def avg_article_topics(articles,model_id):
 def categorize_article(article,categories,model_id):
     dictionary = corpora.Dictionary.load(model_id + '.dict')
     lda = models.LdaModel.load(model_id + '.lda')
-    vec_bow = dictionary.doc2bow(article.lower().split())
+    vec_bow = dictionary.doc2bow(article[2].lower().split())
     vec_lda = lda[vec_bow]
     art_vec = [0] * NUM_TOPICS
     for key,val in vec_lda:
@@ -86,3 +88,58 @@ def categorize_article(article,categories,model_id):
     min_dist  = min(dists)
     min_index = dists.index(min_dist)
     return (categories[min_index][0], min_dist)
+
+def collect_articles(json_filenames):
+    arts = []
+
+    for filename in json_filenames:
+        f = open(filename)
+        subarts = json.load(f)
+        for art in subarts:
+            arts.append(art)
+
+    return arts
+
+if __name__ == "__main__":
+    if len(argv) < 2:
+        print '[USAGE] categorizer.py [train <jsons> | categorize <topic> "trained_jsons" "new_json"]\n'
+        quit()
+
+    command = argv[1]
+
+
+    
+    
+    if command == 'train':
+        filenames = argv[2:]
+        arts = collect_articles(filenames)
+        train_topics(arts)
+    elif command == 'categorize':
+        #LIBERAL then CONSERVATIVE
+
+        topic = argv[2]
+        
+        lib_filename_str = argv[3]
+        lib_arts = collect_articles([lib_filename_str])
+        lib_avg  = avg_article_topics(lib_arts,'political_bias')
+        
+        con_filename_str = argv[4]
+        con_arts = collect_articles([con_filename_str])
+        con_avg  = avg_article_topics(con_arts,'political_bias')
+
+        cats = [('liberal',lib_avg),('conservative',con_avg)]
+        
+        new_filename_str = argv[5]
+        new_arts = collect_articles([new_filename_str])
+
+        final_res = {'topic': topic, 'categories':{'liberal':[], 'conservative':[]}}
+        
+        for art in new_arts:
+            (label,dist) = categorize_article(art,cats,'political_bias')
+            final_res['categories'][label].append(art[0]) #append url
+            
+            
+        jdump = json.dumps(final_res)
+        print jdump
+    else:
+        print 'Invalid command option'
