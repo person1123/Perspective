@@ -1,6 +1,6 @@
 ################################################################################
 ## File:   categorizer.py
-## Author: Robert Adkins
+## Author: Robert Adkins, Jonah Chazan
 ##
 ## This module will use the gensim module to determine the similarities between
 ## articles given a set of articles. It also gives a means of associating
@@ -120,23 +120,16 @@ def do_categorize(new_arts, topic, lib_filename_str, con_filename_str):
 
     cats = [('liberal',lib_avg),('conservative',con_avg)]
         
-    new_arts = collect_articles([new_filename_str])
-        
     final_res = {'topic': topic, 'categories':{'liberal':[], 'conservative':[]}}
         
     for art in new_arts:
         (label,dist) = categorize_article(art,cats,'political_bias')
         final_res['categories'][label].append({'url':art[0],'title':art[1],'rank':dist}) #append url
             
-    for cat in final_res['categories'].keys():
-        cat_entries = final_res['categories'][cat]
-        whiskers = sort(cat_entries, key=lambda data:data[2])
-        final_res['categories'][cat] = whiskers
-            
     jdump = json.dumps(final_res)
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     print jdump
-    #r = requests.post('http://199.48.180.20:3000/topics',data=jdump,headers=headers)
+    r = requests.post('http://199.48.180.20:3000/topics',data=jdump,headers=headers)
     print r
 
 if __name__ == "__main__":
