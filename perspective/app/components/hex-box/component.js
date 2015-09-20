@@ -59,11 +59,9 @@ export default Ember.Component.extend({
       var x4 = x;
       var y4 = y + r;
       
-      return [
-			'M' +
-			x2 + ' ' + y2 + ' L' + x3 +
-			' ' + y3 + ' L' + x4 + ' ' +
-			y4;
+      var path ='M' + x2 + ' ' + y2 + ' L' +
+          x3 + ' ' + y3 + ' L' + x4 + ' ' +
+          y4;
       return path;
       }
   }
