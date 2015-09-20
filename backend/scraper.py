@@ -1,5 +1,44 @@
+################################################################################
+## File:   scraper.py
+## Authors: Han Huang, Jonah Chazan
+##
+## Methods for getting URLS.
+################################################################################
 import urllib2, json
 import newspaper
+import tweepy
+
+#Set up for twitter API
+consumer_key = "ScxlU7SddlmsOE0ypdXfSm2JF"
+consumer_secret = "yI0SH8z7z1OafLnoGGLQRuneeKeJNbiO5hhXXeLH4wUpEfW5kR"
+access_token = "3711878716-C6cpJ2ITjnvOnpLwstlpBJT6IKYg6PC9UEribD1"
+access_token_secret = "mwlzZGTAETDdwxM8x1KDusMkoeWOvKXVrwkJGPr56fgBu"
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+
+api = tweepy.API(auth)
+
+#helper method for redircting shortened URLS
+def get_redirected_url(url):
+    opener = urllib2.build_opener(urllib2.HTTPRedirectHandler)
+    request = opener.open(url)
+    return request.url
+
+def getTweetUrls(key_word, num):
+	urls = []
+
+	for tweet in tweepy.Cursor(api.search, q=key_word, rpp=num, 
+		result_type="recent", include_entities=True,lang="en").items(num):
+	
+		try:
+		    url = tweet.text.split("http://")[1].split(" ")[0]
+		    url = "http://" + url
+		    print get_redirected_url(url)
+
+                    urls.append(url)
+		except: UnicodeEncodeError
+                
+	return urls
 
 def getRedditUrls(term, recentness="week", limit=100,sort="hot"):
     url = 'http://www.reddit.com/search.json?q=' + urllib2.quote(term, safe='') + '&t=' + recentness + '&limit=' + str(limit) + '&sort=' + sort
@@ -35,7 +74,7 @@ def getGoogleNewsUrls(term, pages=3):
 
 
 def filterArticleUrls(urls):
-    blacklist = ["imgur.com","gfycat.com", "youtube.com"]
+    blacklist = ["imgur.com","gfycat.com", "youtube.com", "twitter.com"]
     extBlacklist = ["png", "jpg", "gif", "gifv"]
     matched = []
     for url in urls:
