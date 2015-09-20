@@ -18,7 +18,7 @@ node:
   links:
     - postgres_server
   volumes:
-    - /Users/Developer/workspace/hackmit/api/app:/usr/local/nodejs
+    - /home/aria/Perspective/api/app:/usr/local/nodejs
   command: start api.js
   ports:
     - "3000:3000"
