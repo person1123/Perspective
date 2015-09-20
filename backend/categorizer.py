@@ -108,6 +108,37 @@ def collect_articles(json_filenames):
 
     return arts
 
+
+def do_categorize(new_arts, topic, lib_filename_str, con_filename_str):
+    #LIBERAL then CONSERVATIVE
+        
+    lib_arts = collect_articles([lib_filename_str])
+    lib_avg  = avg_article_topics(lib_arts,'political_bias')
+    
+    con_arts = collect_articles([con_filename_str])
+    con_avg  = avg_article_topics(con_arts,'political_bias')
+
+    cats = [('liberal',lib_avg),('conservative',con_avg)]
+        
+    new_arts = collect_articles([new_filename_str])
+        
+    final_res = {'topic': topic, 'categories':{'liberal':[], 'conservative':[]}}
+        
+    for art in new_arts:
+        (label,dist) = categorize_article(art,cats,'political_bias')
+        final_res['categories'][label].append({'url':art[0],'title':art[1],'rank':dist}) #append url
+            
+    for cat in final_res['categories'].keys():
+        cat_entries = final_res['categories'][cat]
+        whiskers = sort(cat_entries, key=lambda data:data[2])
+        final_res['categories'][cat] = whiskers
+            
+    jdump = json.dumps(final_res)
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    print jdump
+    #r = requests.post('http://199.48.180.20:3000/topics',data=jdump,headers=headers)
+    print r
+
 if __name__ == "__main__":
     if len(argv) < 2:
         print '[USAGE] categorizer.py [train <jsons> | categorize <topic> "trained_jsons" "new_json"]\n'
