@@ -176,12 +176,12 @@ if __name__ == "__main__":
         for art in new_arts:
             (label,dist) = categorize_article(art,cats,'political_bias')
             final_res['categories'][label].append({'url':art[0],'title':art[1],'rank':dist}) #append url
-            
+        '''    
         for cat in final_res['categories'].keys():
             cat_entries = final_res['categories'][cat]
-            whiskers = sort(cat_entries, key=lambda data:data[2])
+            whiskers = sort(cat_entries, key=lambda data:data['rank'])
             final_res['categories'][cat] = whiskers
-            
+        '''
         jdump = json.dumps(final_res)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         print jdump
