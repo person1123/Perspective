@@ -4,9 +4,11 @@
             <h2>{{category.name}}</h2>
             <section class="hex-grid">
                 {{#each category.articles as |article|}}
-                    {{#hex-box class="small-grid"}}
-                        {{article.name}}
-                    {{/hex-box}}
+		            {{#hex-box class="small-grid"}}
+			            <a href="{{article.link}}">
+                            {{article.name}}
+			            </a>
+		            {{/hex-box}}
                 {{/each}}
             </section>
         </section>
