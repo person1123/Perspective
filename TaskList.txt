@@ -1,0 +1,15 @@
+- Create a backend
+	- Create/connect a database
+	- Get topics
+	- Get the data for a topic
+		- Scrape sources
+			- Google News
+			- Reddit
+			- Twitter?
+			- Facebook?
+		- Use gensim to categorize articles
+		- Sort articles in category by importance
+			- Pagerank
+			- Social media popularity:
+	http://stackoverflow.com/questions/5699270/how-to-get-share-counts-using-graph-api
+- Make it pretty and stuff

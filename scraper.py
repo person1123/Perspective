@@ -31,13 +31,11 @@ def getTweetUrls(key_word, num):
 		result_type="recent", include_entities=True,lang="en").items(num):
 	
 		try:
-		    url = tweet.text.split("http://")[1].split(" ")[0]
-		    url = "http://" + url
-		    print get_redirected_url(url)
-
-                    urls.append(url)
+			url = tweet.text.split("http://")[1].split(" ")[0]
+			url = "http://" + url
+			print get_redirected_url(url)
 		except: UnicodeEncodeError
-                
+	
 	return urls
 
 def getRedditUrls(term, recentness="week", limit=100,sort="hot"):
