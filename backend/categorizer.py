@@ -14,6 +14,7 @@ import operator
 from pprint import pprint
 from sys import argv
 import json
+import requests
 
 NUM_TOPICS = 30
 
@@ -140,6 +141,9 @@ if __name__ == "__main__":
             
             
         jdump = json.dumps(final_res)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         print jdump
+        r = requests.post('http://199.48.180.20:3000/topics',data=jdump,headers=headers)
+        print r
     else:
         print 'Invalid command option'
