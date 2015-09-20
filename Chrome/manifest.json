@@ -1,0 +1,14 @@
+{
+	"manifest_version": 2,
+	
+	"name": "Perspective",
+	"description": "This extension will find other viewpoints on issues you read about",
+	"version": "0.1",
+	
+	"content_scripts": [
+		{
+			"matches": ["http://*/*"],
+			"js": ["perspective.js"]
+		}
+	]
+}
