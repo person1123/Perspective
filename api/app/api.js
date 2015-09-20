@@ -13,14 +13,13 @@
   app.get('/topics', (req, res) => {
     let response = {};
     
-    Promise.all([
-      DBModel.Topic.findAll().then((topics) => {
-        response.topics = topics;
-      }),
-      DBModel.Article.findAll().then((articles) => {
-        response.articles = articles;
-      })
-    ]).then(() => {
+    DBModel.Topic.findAll({
+      include: [{
+        model: DBModel.Category,
+        include: [DBModel.Article]
+      }]
+    }).then((topics) => {
+      response.topics = topics;
       res.json(response);
     });
   });
@@ -28,17 +27,11 @@
   app.get('/topics/:topic_id', (req, res) => {
     let response = {};
     let id = req.params.topic_id;
-    
-    Promise.all([
-      DBModel.Topic.findById(id).then((topics) => {
-        response.topic = topics;
-      }),
-      DBModel.Article.findAll({
-        where: {topicId: id}
-      }).then((articles) => {
-        response.articles = articles;
-      })
-    ]).then(() => {
+
+    DBModel.Topic.findById(id, {
+      include: [DBModel.Article]
+    }).then((topics) => {
+      response.topics = topics;
       res.json(response);
     });
   });

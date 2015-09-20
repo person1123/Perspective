@@ -149,6 +149,20 @@ body {
   }
 }
 
+.overlay-container {
+  @extend %absolute-center;
+  height: 100%;
+
+  .content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 
 // Make input textfields just an underline
 input[type=text] {

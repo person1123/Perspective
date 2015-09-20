@@ -5,13 +5,27 @@ let pg_ip = process.env.HACKDB_PORT_5432_TCP_ADDR;
 let sequelize = new Sequelize('postgres://postgres@' + pg_ip + ':5432/hackmit');
 
 class DBModel {
-  constructor(Topic, Article) {
+  constructor(Topic, Category, Article) {
     this.Topic = Topic;
     this.Article = Article;
+    this.Category = Category;
   }
 }
 
 let Topic = sequelize.define('topic', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  },
+  name: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  }
+});
+
+let Category = sequelize.define('category', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -40,7 +54,9 @@ let Article = sequelize.define('article', {
     allowNull: false
   }
 });
-Topic.hasMany(Article);
 
-module.exports = new DBModel(Topic, Article);
+Topic.hasMany(Category);
+Category.hasMany(Article);
+
+module.exports = new DBModel(Topic, Category, Article);
 

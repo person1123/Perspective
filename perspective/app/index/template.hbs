@@ -1,9 +1,33 @@
-<section class="container row">
+<section class="container row center-xs">
     {{#each model as |topic|}}
-        <div class="topic-div col-md-4 col-xs-12">
-            {{#link-to "topic.show" topic class="topic"}}
-                {{topic.name}}
-            {{/link-to}}
+        <div class="topic-div col-sm-4 col-lg-3 col-xs-8">
+            <div class="topic">
+                {{#link-to "topic.show" topic}}
+                    <section class="topic-header">
+                        {{topic.name}}
+                    </section>
+                    <section class="row block end-xs">
+                        <div class="top col-xs-6 lines">
+                            <div class="square"></div>
+                        </div>
+                        <div class="top lines col-xs-6">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </section>
+                    <section class="block bottom lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </section>
+                {{/link-to}}
+            </div>
         </div>
     {{/each}}
 </section>
