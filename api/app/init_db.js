@@ -11,7 +11,8 @@
       { name: 'Topic 3' },
       { name: 'Topic 4' },
       { name: 'Topic 5' },
-      { name: 'Topic 6' }
+      { name: 'Topic 6' },
+      { name: 'Topic 7' }
     ];
     
     for (let i = 0; i < topics.length; i++) {

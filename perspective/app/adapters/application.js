@@ -1,5 +1,5 @@
 import DS from 'ember-data';
 
 export default DS.RESTAdapter.extend({
-  host: 'http://199.48.180.20:3000'
+  host: 'http://192.168.99.100:3000'
 });
