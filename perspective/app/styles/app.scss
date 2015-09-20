@@ -3,13 +3,6 @@
 @import 'defaults';
 @import 'pods';
 
-body {
-	background-image: url(assets/geek-glasses-200380.jpg);
-	background-scale: contain;
-	background-repeat: none;
-	background-center: 50% 50%;
-}
-
 body > .ember-view {
   height: 100%;
 }
@@ -25,16 +18,22 @@ body > .ember-view {
   }
 }
 
-nav {
+.header {
+  @extend %flex-center;
+  
   background-color: $dark-brown;
   height: 100px;
+  flex-direction: column;
   margin-bottom: 20px;
+
+  .logo {
+    height: 50px;
+  }
 }
 
 .page-title {
   color: $white;
   letter-spacing: .2em;
-  line-height: 100px;
   margin: 0;
   text-transform: uppercase;
 }
@@ -48,6 +47,7 @@ footer {
   }
   
   .footer-image {
+    -webkit-filter: grayscale(1);
     width: 100px;
   }
 }

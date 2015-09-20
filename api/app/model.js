@@ -52,6 +52,10 @@ let Article = sequelize.define('article', {
   link: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  rank: {
+    type: Sequelize.DOUBLE,
+    allowNull: false
   }
 });
 

@@ -10,6 +10,9 @@
   // Create the server
   app.use(cors());
   app.use(parse.json());
+  app.use(parse.urlencoded({
+    extended: true
+  }));
   require('http').createServer(app).listen('3000');
   
   app.get('/topics', (req, res) => {
@@ -21,7 +24,7 @@
         include: [DBModel.Article]
       }],
       order: [
-        ['createdAt', 'DESC']
+        [DBModel.Category, DBModel.Article, 'rank', 'DESC']
       ],
       limit: 6
     }).then((topics) => {
@@ -31,23 +34,43 @@
   });
 
   app.post('/topics', (req, res) => {
+    
     let body = req.body;
-    
     let topic = body.topic;
-    let articles = body.articles;
-    let categories = body.categories;
+    DBModel.Topic.findOrCreate({
+      where: {
+        name: topic
+      }
+    }).spread((newTopic) => {
+      let topicId = newTopic.id;
+      let categories = Object.keys(body.categories);
+      
+      for (let i = 0; i < categories.length; i++) {
+        let category = categories[i];
+        let articles = body.categories[category];
 
-    DBModel.Topic.create(topic);
-
-    for (let i = 0; i < articles.length; i++) {
-      let newArticle = articles[i];
-      DBModel.Article.create(newArticle);
-    }
-    
-    for (let i = 0; i < categories.length; i++) {
-      let newCategory = categories[i];
-      DBModel.Category.create(newCategory);
-    }
+        DBModel.Category.findOrCreate({
+          where: {
+            name: category,
+            topicId: topicId
+          }
+        }).spread((newCategory) => {
+          for (let i = 0; i < articles.length; i++) {
+            let article = articles[i];
+            let categoryId = newCategory.id;
+            DBModel.Article.findOrCreate({
+              where: {
+                name: article.title,
+                categoryId: categoryId
+              }, defaults: {
+                link: article.url,
+                rank: article.rank
+              }});
+          }
+        });
+      }
+    });
+    res.json('success');
   });
 
   app.get('/topics/:topic_id', (req, res) => {
