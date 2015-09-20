@@ -1,6 +1,6 @@
 ################################################################################
 ## File:   categorizer.py
-## Author: Robert Adkins
+## Author: Robert Adkins, Jonah Chazan
 ##
 ## This module will use the gensim module to determine the similarities between
 ## articles given a set of articles. It also gives a means of associating
@@ -19,7 +19,10 @@ import requests
 NUM_TOPICS = 30
 
 def train_topics(articles,name='political_bias'):
-    stoplist = set('for a of the and to in by'.split())
+    prepFile = open('prepositions.txt')
+    preps = prepFile.readlines()
+    preps = [prep.strip() for prep in preps]
+    stoplist = set(preps)
     texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
@@ -44,9 +47,13 @@ def train_topics(articles,name='political_bias'):
 def sum_article_topics(articles,model_id):
     dictionary = corpora.Dictionary.load(model_id + '.dict')
     lda = models.LdaModel.load(model_id + '.lda')
+
+    prepFile = open('prepositions.txt')
+    preps = prepFile.readlines()
+    preps = [prep.strip() for prep in preps]
+    stoplist = set(preps)
     
     # ignore prepositional type words as meaningful words
-    stoplist = set('for a of the and to in by'.split())
     texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
@@ -101,6 +108,30 @@ def collect_articles(json_filenames):
 
     return arts
 
+
+def do_categorize(new_arts, topic, lib_filename_str, con_filename_str):
+    #LIBERAL then CONSERVATIVE
+        
+    lib_arts = collect_articles([lib_filename_str])
+    lib_avg  = avg_article_topics(lib_arts,'political_bias')
+    
+    con_arts = collect_articles([con_filename_str])
+    con_avg  = avg_article_topics(con_arts,'political_bias')
+
+    cats = [('liberal',lib_avg),('conservative',con_avg)]
+        
+    final_res = {'topic': topic, 'categories':{'liberal':[], 'conservative':[]}}
+        
+    for art in new_arts:
+        (label,dist) = categorize_article(art,cats,'political_bias')
+        final_res['categories'][label].append({'url':art[0],'title':art[1],'rank':dist}) #append url
+            
+    jdump = json.dumps(final_res)
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    print jdump
+    r = requests.post('http://199.48.180.20:3000/topics',data=jdump,headers=headers)
+    print r
+
 if __name__ == "__main__":
     if len(argv) < 2:
         print '[USAGE] categorizer.py [train <jsons> | categorize <topic> "trained_jsons" "new_json"]\n'
@@ -137,9 +168,13 @@ if __name__ == "__main__":
         
         for art in new_arts:
             (label,dist) = categorize_article(art,cats,'political_bias')
-            final_res['categories'][label].append(art[0]) #append url
-            
-            
+            final_res['categories'][label].append({'url':art[0],'title':art[1],'rank':dist}) #append url
+        '''    
+        for cat in final_res['categories'].keys():
+            cat_entries = final_res['categories'][cat]
+            whiskers = sort(cat_entries, key=lambda data:data['rank'])
+            final_res['categories'][cat] = whiskers
+        '''
         jdump = json.dumps(final_res)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         print jdump

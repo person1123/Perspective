@@ -18,9 +18,19 @@ body > .ember-view {
   }
 }
 
+a,
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: underline;
+  font-size: 1.2em;
+  font-family: 'Open Sans' sans-serif;
+  font-weight: 300
+}
+
 .header {
   @extend %flex-center;
-  
   background-color: $dark-brown;
   height: 100px;
   flex-direction: column;
