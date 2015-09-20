@@ -3,22 +3,29 @@
 @import 'defaults';
 @import 'pods';
 
+body {
+    background-image: url('https://secure.static.tumblr.com/3cdc629ad66f3fbeeb0c15892e054cab/aezjrrm/QPjn29gyy/tumblr_static_desert_landscape.jpg');
+    background-size: cover;
+
+}
+
 body > .ember-view {
-  height: 100%;
+    height: 100%;
 }
 
 .page-wrap {
-  margin: 0 auto -$footer-height;
+  margin: 0 auto (-$footer-height);
   min-height: 100%;
 
   &::after {
-    content: '';
-    height: $footer-height;
+      display: block;
+      content: '';
+      height: $footer-height;
   }
 }
 
 nav {
-  background-color: $dark-blue;
+  background-color: $dark-brown;
   height: 100px;
   margin-bottom: 20px;
 }

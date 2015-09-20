@@ -1,19 +1,31 @@
 .index-header {
-  margin: .5em 0;
+    margin: .5em 0;
 }
 
 .topic-div {
+    height: 260px;
   margin-bottom: 20px;
+}
+
+.topic-div:nth-child(2n+0) {
+    height:340px;
+
+    margin-top:-80px;
+}
+
+.topic-div:nth-child(1),.topic-div:nth-child(2),.topic-div:nth-child(3),.topic-div:nth-child(4) {
+    margin-top:0px;   
 }
 
 .topic {
   background-color: $light-gray;
-  box-shadow: 5px 5px 12px 0 $gray;
-  height: 300px;
+  border-bottom: 5px solid $lighter-brown;
+  border-right: 5px solid $light-brown;
+  height: 100%;
   padding: 5%;
 
   .block {
-    height: 50%;
+      height: 50%;
 
     .top {
       height: 100%;
@@ -31,7 +43,7 @@
 
   .square,
   .line {
-    background-color: $gray;
+    background-color: $light-brown;
   }
 
   .square {
