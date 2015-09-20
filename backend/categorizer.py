@@ -19,7 +19,10 @@ import requests
 NUM_TOPICS = 30
 
 def train_topics(articles,name='political_bias'):
-    stoplist = set('for a of the and to in by'.split())
+    prepFile = open('prepositions.txt')
+    preps = prepFile.readlines()
+    preps = [prep.strip() for prep in preps]
+    stoplist = set(preps)
     texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
@@ -44,9 +47,13 @@ def train_topics(articles,name='political_bias'):
 def sum_article_topics(articles,model_id):
     dictionary = corpora.Dictionary.load(model_id + '.dict')
     lda = models.LdaModel.load(model_id + '.lda')
+
+    prepFile = open('prepositions.txt')
+    preps = prepFile.readlines()
+    preps = [prep.strip() for prep in preps]
+    stoplist = set(preps)
     
     # ignore prepositional type words as meaningful words
-    stoplist = set('for a of the and to in by'.split())
     texts = [[word for word in article[2].lower().split() if word not in stoplist]
              for article in articles]
 
@@ -137,7 +144,7 @@ if __name__ == "__main__":
         
         for art in new_arts:
             (label,dist) = categorize_article(art,cats,'political_bias')
-            final_res['categories'][label].append(art[0]) #append url
+            final_res['categories'][label].append({'url':art[0],'title':art[1]}) #append url
             
             
         jdump = json.dumps(final_res)
