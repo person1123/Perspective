@@ -1,8 +1,14 @@
-<h1>{{model.name}}</h1>
-<section class="hex-grid container">
-    {{#each model.articles as |article|}}
-        {{#hex-box responsive=true}}
-            {{article.name}}
-        {{/hex-box}}
+<section class="container row center-xs">
+    {{#each model.categories as |category|}}
+        <section class="category col-xs-6">
+            <h2>{{category.name}}</h2>
+            <section class="hex-grid">
+                {{#each category.articles as |article|}}
+                    {{#hex-box class="small-grid"}}
+                        {{article.name}}
+                    {{/hex-box}}
+                {{/each}}
+            </section>
+        </section>
     {{/each}}
 </section>

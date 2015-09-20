@@ -6,13 +6,41 @@
   &:hover {
     animation: hexDash .7s infinite;
   }
-    
+  
   @keyframes hexDash {
     0% {stroke-dasharray: 0,0,340%;}
     10% {stroke-dasharray: 0,20,340%;}
     100% {stroke-dasharray: 320%,20,340%;}
   }
-  
+
+  &.small-grid {
+    width: 39.4%;
+
+    &:nth-child(4n+3),
+    &:nth-child(4n+4) {
+      margin-bottom: -10.392%;
+      margin-top: -10.392%;
+      transform: translateX(50%);
+    }
+    
+    &:nth-child(4n+3):last-child,
+    &:nth-child(4n+4):last-child {
+      margin-bottom: 0;      
+    }
+
+    &:nth-child(4n+3):nth-last-child(2) {
+      margin-bottom: 0;
+    }
+
+    &:nth-child(4n+3) {
+      margin-left: .5%;
+    }
+
+    &:nth-child(2n+2) {
+      margin-left: 1%;
+    }
+  }
+
   &.responsive {
     @media (min-width: $large-screen) {
       width: 17.364%;

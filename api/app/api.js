@@ -29,7 +29,10 @@
     let id = req.params.topic_id;
 
     DBModel.Topic.findById(id, {
-      include: [DBModel.Article]
+      include: [{
+        model: DBModel.Category,
+        include: [DBModel.Article]
+      }]
     }).then((topics) => {
       response.topics = topics;
       res.json(response);

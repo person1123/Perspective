@@ -8,11 +8,12 @@ body > .ember-view {
 }
 
 .page-wrap {
-  margin: 0 auto -$footer-height;
+  margin: 0 auto (-$footer-height);
   min-height: 100%;
 
   &::after {
     content: '';
+    display: block;
     height: $footer-height;
   }
 }

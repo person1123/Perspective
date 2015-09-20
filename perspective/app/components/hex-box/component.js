@@ -8,11 +8,6 @@ export default Ember.Component.extend({
   },
   drawHexagon() {
     let el = this.$();
-
-	if (this.get('responsive')) {
-	  el.addClass('responsive');
-	}
-
     let width = el.width();
     let height = width / Math.sqrt(3) * 2;
     let hexPath = hexagonPath(width/2, height/2, height/2 - 2);
